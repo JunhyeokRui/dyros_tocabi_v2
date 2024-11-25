@@ -90,6 +90,9 @@ StateManager::StateManager(DataContainer &dc_global) : dc_(dc_global), rd_gl_(dc
 
     hand_ft_pub_org_ = dc_.nh.advertise<std_msgs::Float32MultiArray>("/tocabi/handft_raw", 100);
 
+    pelv_lin_vel_pub_ = dc_.nh.advertise<geometry_msgs::Twist>("/tocabi/pelvlinvel", 1);
+
+
     com_status_msg_.data.resize(17);
     point_pub_msg_.polygon.points.resize(24);
     syspub_msg.data.resize(8);
@@ -100,6 +103,8 @@ StateManager::StateManager(DataContainer &dc_global) : dc_(dc_global), rd_gl_(dc
     LH_CALIB.setZero();
     RH_CALIB.resize(6, 3);
     RH_CALIB.setZero();
+    
+    
 }
 
 StateManager::~StateManager()
@@ -2189,8 +2194,14 @@ void StateManager::StateEstimate()
 
         for (int i = 0; i < 3; i++)
         {
-            q_virtual_(i) = -mod_base_pos(i);
-            q_dot_virtual_(i) = pelv_v(i);
+            //SECTION - estimated value
+            // q_virtual_(i) = -mod_base_pos(i);
+            // q_dot_virtual_(i) = pelv_v(i);
+            //!SECTION - estimated value
+            //SECTION - sim value
+            q_virtual_(i) = dc_.tc_shm_->pos_virtual[i];
+            q_dot_virtual_(i) = dc_.tc_shm_->vel_virtual[i];
+            //!SECTION - sim value
             // q_dot_virtual_(i) = mod_base_vel(i);
 
             // q_dot_virtual_(i) = base_vel_lpf(i);
@@ -2446,7 +2457,11 @@ void StateManager::PublishData()
 
     // head_pose_msg_.orientation.
 
-    //
+    // pelv_vel_ //rui - pelv_vel_pub_
+    pelv_vel_msg_.linear.x = link_[Pelvis].v(0);
+    pelv_vel_msg_.linear.y = link_[Pelvis].v(1);
+    pelv_vel_msg_.linear.z = link_[Pelvis].v(2);
+    pelv_lin_vel_pub_.publish(pelv_vel_msg_);
 
     bool query_elmo_pub_ = false;
 

@@ -1,5 +1,5 @@
 <launch>
-    <arg name="hand" default="true" />
+    <arg name="hand" default="false" />
     <arg name="gui" default="true" />
     <arg name="controller" default="true" />
     <arg name="log" default="false"/>
@@ -23,6 +23,8 @@
 
     <rosparam command="load" file="$(find tocabi_description)/setting/setting_simulation_positionPDgain.yaml" ns="/tocabi_controller" />
     <rosparam command="load" file="$(find tocabi_description)/setting/setting_simulation_parameters.yaml" ns="/tocabi_controller" />
+    <!-- <rosparam command="load" file="$(find tocabi_cc)/cfg/cc_config.yaml" ns="/tocabi_controller" /> -->
+    <rosparam command="load" file="$(find tocabi_cc)/cfg/cc_config_deepmimic.yaml" ns="/tocabi_controller" />
     <param name="tocabi_controller/sim_mode" value="true" />
 
     <group if="$(arg controller)">

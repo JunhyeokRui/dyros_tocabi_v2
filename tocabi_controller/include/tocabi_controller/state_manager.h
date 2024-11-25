@@ -19,6 +19,7 @@
 #include <std_msgs/Int16MultiArray.h>
 #include <geometry_msgs/PolygonStamped.h>
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Twist.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/Int8MultiArray.h>
@@ -177,6 +178,10 @@ public:
 
     ros::Publisher com_status_pub_;
     std_msgs::Float32MultiArray com_status_msg_;
+
+    //rui - pelv lin velocity publisher
+    ros::Publisher pelv_lin_vel_pub_;
+    geometry_msgs::Twist pelv_vel_msg_;    
 
     ros::Publisher hand_ft_pub_;
     std_msgs::Float32MultiArray hand_ft_msg_;
