@@ -21,7 +21,7 @@ while true; do
               mkdir Temp
               cd Temp
 
-              git clone https://github.com/saga0619/rbdl-orb
+              git clone --recurse-submodules https://github.com/saga0619/rbdl-orb
               cd rbdl-orb
               mkdir build
               cd build
