@@ -71,9 +71,6 @@ git clone https://github.com/saga0619/tocabi_gui
 ```
 
 ### 5. Simulator
-  * You need mujoco license!   
-  * Visit <https://www.roboti.us/license.html> for license information
-  * place license file at ~/mjkey.txt
 ```sh
 cd catkin_ws/src
 git clone https://github.com/saga0619/mujoco_ros_sim
